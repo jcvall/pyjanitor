@@ -2,9 +2,7 @@
 
 ## Description
 
-Adds a column to the dataframe.
-
-Intended to be the method-chaining alternative to: `df[colname] = value`.
+This method adds a column to the dataframe. It is intended to be the method-chaining alternative to: `df[colname] = value`.
 
 ## Parameters
 ### df
@@ -24,7 +22,7 @@ If value is a tuple or list that is smaller than the number of rows in the DataF
 ```python
 import pandas as pd
 import janitor
- 
+
 
 data = {
     "a": [1, 2, 3] * 3,
@@ -33,11 +31,11 @@ data = {
     "animals": ["rabbit", "leopard", "lion"] * 3,
     "cities": ["Cambridge", "Shanghai", "Basel"] * 3,
 }
- 
+
 df = pd.DataFrame(data)
 ```
- 
- 
+
+
 ## Example 1: Create a new column with a single value
 
 ```python
@@ -56,7 +54,7 @@ df.add_column("city_pop", 100000)
     7  2            2                   2  leopard   Shanghai    100000
     8  3            3                   3     lion      Basel    100000
 
-## Example2: Create a new column with an iterator which fills to the column size
+## Example 2: Create a new column with an iterator which fills to the column size
 ```python
 df.add_column("city_pop", range(3), fill_remaining=True)
 ```
@@ -70,9 +68,9 @@ df.add_column("city_pop", range(3), fill_remaining=True)
     5  3            3                   3     lion      Basel         2
     6  1            1                   1   rabbit  Cambridge         0
     7  2            2                   2  leopard   Shanghai         1
-    8  3            3                   3     lion      Basel         2 
+    8  3            3                   3     lion      Basel         2
 
-## Example3: Add new column based on mutation of other columns
+## Example 3: Add new column based on mutation of other columns
 ```python
 df.add_column("city_pop", df.Bell__Chart - 2 * df.a)
 ```

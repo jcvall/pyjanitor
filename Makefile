@@ -1,3 +1,6 @@
+SHELL=/bin/bash
+ACTIVATE=source activate pyjanitor-dev
+
 release:
 	rm dist/*
 	python setup.py sdist bdist_wheel
@@ -9,23 +12,43 @@ release:
 #
 # ALSO, remove this comment once it's tested!!!!!!!!!!!
 
+.PHONY: format test lint docs isort check style notebooks install
+
 format:
+	@echo "Applying Black Python code formatting..."
 	black -l 79 .
 
 test:
-	pytest
+	@echo "Running test suite..."
+	pytest --cov-report html
 
 lint:
-	pycodestyle .
+	@echo "Checking code formatting..."
+	pycodestyle . --exclude "./nbconvert_config.py, ./env, ./venv"
 
 docs:
+	@echo "Building documentation..."
 	cd docs && make html
 
 isort:
-	isort -r . -y -up -tc
+	@echo "Sorting imports..."
+	isort -rc . -y -up -tc
 
-check: test docs isort format lint
-	echo "checks complete"
+check: test docs notebooks isort format lint
+	@echo "checks complete"
 
 style: isort format
-	echo "styling complete"
+	@echo "styling complete"
+
+install:
+	@echo "Creating Conda environment..."
+	conda env create -f environment-dev.yml
+
+	@echo "Installing PyJanitor in development mode..."
+	$(ACTIVATE) && python setup.py develop
+
+	@echo "Registering current virtual environment as a Jupyter Python kernel..."
+	$(ACTIVATE) && python -m ipykernel install --user --name pyjanitor-dev --display-name "PyJanitor development"
+
+	@echo "Installing pre-commit hooks"
+	$(ACTIVATE) && pre-commit install

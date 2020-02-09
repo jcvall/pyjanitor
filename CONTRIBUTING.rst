@@ -1,94 +1,21 @@
-.. highlight:: shell
-
 ============
 Contributing
 ============
 
-Contributions are welcome, and they are greatly appreciated! Every
-little bit helps, and credit will always be given.
+Contributions are welcome, and they are greatly appreciated!
+Every little bit helps, and credit will always be given.
 
-You can contribute in many ways:
+The following sections detail a variety of ways to contribute,
+as well as how to get started.
 
-Types of Contributions
-----------------------
-
-Report Bugs
-~~~~~~~~~~~
-
-Report bugs at https://github.com/ericmjl/pyjanitor/issues.
-
-If you are reporting a bug, please include:
-
-* Your operating system name and version.
-* Any details about your local setup that might be helpful in troubleshooting.
-* Detailed steps to reproduce the bug.
-
-Fix Bugs
-~~~~~~~~
-
-Look through the GitHub issues for bugs. Anything tagged with "bug"
-and "help wanted" is open to whoever wants to implement it.
-
-Implement Features
-~~~~~~~~~~~~~~~~~~
-
-Look through the GitHub issues for features. Anything tagged with "enhancement"
-and "help wanted" is open to whoever wants to implement it.
-
-Implementing a feature generally means writing a function that has the
-following form:
-
-.. code-block:: python
-
-    @pf.register_dataframe_method
-    def function(df, *args, **kwargs):
-        # stuff done here
-        return df
-
-The function signature should take a pandas dataframe as the input, and return
-a pandas dataframe as the output. Any manipulation to the dataframe should be
-implemented inside the function.
-
-This function should be implemented in `functions.py`, and should have a test
-accompanying it in `tests/functions/test_<function_name_here>.py`.
-
-When writing a test, the minimum acceptable test is an "example-based test".
-Under ``janitor.testing_utils.fixtures``, you will find a suite of example
-dataframes that can be imported and used in the test.
-
-If you are more experienced with testing, you can use Hypothesis to
-automatically generate example dataframes. We provide a number of
-dataframe-generating strategies in ``janitor.testing_utils.strategies``.
-
-If you're wondering why we don't have to implement the method chaining
-portion, it's because we use pandas-flavor's `register_dataframe_method`,
-which registers the function as a pandas dataframe method.
-
-Write Documentation
-~~~~~~~~~~~~~~~~~~~
-
-``pyjanitor`` could always use more documentation, whether as part of the
-official pyjanitor docs, in docstrings, or even on the web in blog posts,
-articles, and such.
-
-Submit Feedback
-~~~~~~~~~~~~~~~
-
-The best way to send feedback is to file an issue at https://github.com/ericmjl/pyjanitor/issues.
-
-If you are proposing a feature:
-
-* Explain in detail how it would work.
-* Keep the scope as narrow as possible, to make it easier to implement.
-* Remember that this is a volunteer-driven project, and that contributions
-  are welcome :)
+.. note:: Please take a look at the `types of Contributions  <CONTRIBUTION_TYPES.html>`__  that we welcome, along with the guidelines.
 
 Get Started!
 ------------
 
-Ready to contribute? Here's how to set up `pyjanitor` for local development.
+Ready to contribute? Here's how to setup ``pyjanitor`` for local development.
 
-1. Fork the `pyjanitor` repo on GitHub.
+1. Fork the ``pyjanitor`` repo on GitHub: https://github.com/ericmjl/pyjanitor.
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/pyjanitor.git
@@ -96,33 +23,100 @@ Ready to contribute? Here's how to set up `pyjanitor` for local development.
 3. Install your local copy into a conda environment. Assuming you have conda installed, this is how you set up your fork for local development::
 
     $ cd pyjanitor/
-    $ conda env create -f environment-dev.yml
-    $ python setup.py develop
+    $ make install
 
-4. Create a branch for local development::
+This also installs your new conda environment as a Jupyter-accessible kernel. To run correctly inside the environment, make sure you select the correct kernel from the top right corner of JupyterLab!
 
-New features added to pyjanitor should be done in a new branch you have based off of the latest version of the `dev` branch. The protocol for pyjanitor branches for new development is that the `master` branch mirrors the current version of pyjanitor on PyPI, whereas `dev` branch is for additional features for an eventual new official version of the package which might be deemed slightly less stable. Once more confident in the reliability / suitability for introducing a batch of changes into the official version, the `dev` branch is then merged into `master` and the PyPI package is subsequently updated.
+.. note :: If you are on Windows, you may need to install ``make`` before you can run the install. You can get it from ``conda-forge``::
 
-To base a branch directly off of `dev` instead of `master`, create a new one as follows:
+    $ conda install -c defaults -c conda-forge make
+
+    You should be able to run `make` now. The command above installs `make` to the `~/Anaconda3/Library/bin` directory.
+
+.. note:: For PyCharm users, here are some `instructions <PYCHARM_USERS.html>`__  to get your Conda environment set up.
+
+4. (Optional) Install the pre-commit hooks.
+
+As of 29 October 2019, pre-commit hooks are available to run code formatting checks automagically
+before git commits happen. If you did not have these installed before, run the following commands::
+
+    # Update your environment to install pre-commit
+    $ conda env update -f environment-dev.yml
+    # Install pre-commit hooks
+    $ pre-commit install-hooks
+
+5. You should also be able to build the docs locally. To do this, from the main ``pyjanitor`` directory::
+
+    $ make docs
+
+The command above allows you to view the documentation locally in your browser. `Sphinx (a python documentation generator) <http://www.sphinx-doc.org/en/stable/usage/quickstart.html>`_ builds and renders the html for you, and you can find the html files by navigating to ``pyjanitor/docs/_build``, and then you can find the correct html file. To see the main pyjanitor page, open the ``index.html`` file.
+
+.. note:: If you get any errors related to Importing modules when running `make docs`, first activate the development environment::
+
+    $ source activate pyjanitor-dev
+
+    or by typing::
+
+    $ conda activate pyjanitor-dev
+
+
+Sphinx uses `rst files (restructured text) <http://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_ as its markdown language. To edit documentation, go to the rst file that corresponds to the html file you would like to edit. Make the changes directly in the rst file with the correct markup. Save the file, and rebuild the html pages using the same commands as above to see what your changes look like in html.
+
+6. Submit an issue to the ``pyjanitor`` GitHub issue tracker describing your planned changes: https://github.com/ericmjl/pyjanitor/issues
+
+This helps us keep track of who is working on what.
+
+7. Create a branch for local development:
+
+New features added to ``pyjanitor`` should be done in a new branch you have based off of the latest version of the ``dev`` branch. The protocol for ``pyjanitor`` branches for new development is that the ``master`` branch mirrors the current version of ``pyjanitor`` on PyPI, whereas the ``dev`` branch is for additional features for an eventual new official version of the package which might be deemed slightly less stable. Once more confident in the reliability/suitability for introducing a batch of changes into the official version, the ``dev`` branch is then merged into ``master`` and the PyPI package is subsequently updated.
+
+To base a branch directly off of ``dev`` instead of ``master``, create a new one as follows::
 
     $ git checkout -b name-of-your-bugfix-or-feature dev
 
-   Now you can make your changes locally.
+Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass flake8 and the tests::
+8. When you're done making changes, check that your changes are properly formatted and that all tests still pass::
 
-    $ flake8 janitor tests
-    $ py.test
+    $ make check
 
-   flake8 and pytest are instaled when you create the development environment.
+If any of the checks fail, you can apply the checks individually (to save time):
 
-6. Commit your changes and push your branch to GitHub::
+* Automated code formatting: ``make style``
+* Code styling problems check: ``make lint``
+* Code unit testing: ``make test``
+
+Styling problems must be resolved before the pull request can be accepted.
+
+``make test`` runs all of ``pyjanitor``'s unit tests to probe for whether changes to the source code have potentially introduced bugs. These tests must also pass before the pull request is accepted.
+
+All of these commands are available when you create the development environment.
+
+When you run the test locally, the tests in ``chemistry.py``, ``biology.py``, ``spark.py`` are automatically skipped if you don't have the optional dependencies (e.g. ``rdkit``) installed.
+
+9. Commit your changes and push your branch to GitHub::
 
     $ git add .
     $ git commit -m "Your detailed description of your changes."
     $ git push origin name-of-your-bugfix-or-feature
 
-7. Submit a pull request through the GitHub website where when you are picking out which branch to merge into, you select `dev` instead of `master`.
+10. Submit a pull request through the GitHub website. When you are picking out which branch to merge into, be sure to select ``dev`` (not ``master``).
+
+
+
+Code Compatibility
+------------------
+
+pyjanitor supports Python 3.6+, so all contributed code must maintain this compatibility.
+
+
+Tip
+----
+
+To run a subset of tests::
+
+    $ py.test tests.test_functions
+
 
 Pull Request Guidelines
 -----------------------
@@ -133,10 +127,3 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-
-Tips
-----
-
-To run a subset of tests::
-
-    $ py.test tests.test_functions
